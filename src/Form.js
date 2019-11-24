@@ -6,7 +6,8 @@ class Form extends React.Component {
             age: 0,
             PhoneNumber: "" ,
             email: "",
-            Valid: true
+            Valid: true,
+            buttonDisable: true
         }
       }
 
@@ -24,16 +25,16 @@ class Form extends React.Component {
         let Pattern = /^\d{9}$/
         if(this.state.age > 18)
             Pattern = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
-        Pattern.test(e.target.Validation.value) ?
-        this.setState({Valid: true})
+        Pattern.test(e.target.value) ?
+        this.setState({Valid: true, buttonDisable: false})
         :
-        this.setState({Valid: false})
+        this.setState({Valid: false, buttonDisable: true})
     }
     render(){      
             
     return(
         <div style={{border:'2px solid black', padding:'3px', marginLeft: '35%', marginRight: '40%', marginTop: '10%', position: 'relative'}}>
-                <form onSubmit={this.handleValid}>
+                <form >
                     <p>Age:</p> <input onChange={this.handleChangeAge} type="number" name="age"></input>
                     {this.state.age < 18 ? 
                     <div><p>Parent name: </p> <input></input></div>
@@ -42,7 +43,7 @@ class Form extends React.Component {
                     {this.state.age < 18 ? 
                     <div>
                         <p>Parent Number:</p>
-                        <input onChange={this.handlePhoneNumber} name="Validation" value={this.state.PhoneNumber}></input>
+                        <input onChange={(e) => {this.handlePhoneNumber(e); this.handleValid(e)}} name="Validation" value={this.state.PhoneNumber}></input>
                         {this.state.Valid ? null : <p><label> Incorect Phone number</label></p>}
                     </div>
                     :
@@ -51,8 +52,8 @@ class Form extends React.Component {
                         <input name="Validation" onChange={this.handleEmail} value={this.state.email}></input>
                         {this.state.Valid ? null : <p><label> Incorect email </label></p>}
                     </div>}
-                    <br />          
-                    <button style={{position: 'absolute', right: '45%'}}>Submit</button>
+                    <br />
+                    <button style={{position: 'absolute', right: '45%' }} disabled={this.state.buttonDisable}>Submit</button>
                 </form>
             <br />
         </div>
