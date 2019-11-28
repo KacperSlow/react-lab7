@@ -49,7 +49,7 @@ class Form extends React.Component {
                     :
                     <div>
                         <p>Email:</p>
-                        <input name="Validation" onChange={this.handleEmail} value={this.state.email}></input>
+                        <input name="Validation" onChange={(e) => {this.handleEmail(e); this.handleValid(e)}} value={this.state.email}></input>
                         {this.state.Valid ? null : <p><label> Incorect email </label></p>}
                     </div>}
                     <br />
